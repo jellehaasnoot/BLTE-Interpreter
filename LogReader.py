@@ -47,4 +47,4 @@ class LogReader:
             value = value_raw.replace("\"", "").replace("-", "")     # This will removes the useless characters
             self.value_list.append(value)
 
-#TEST DEZE SHIZNIT
+
