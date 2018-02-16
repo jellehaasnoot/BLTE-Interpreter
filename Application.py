@@ -1,8 +1,12 @@
 import wx as wx
 import os
+import NRFbluetoothlogfileconverter
+import LogReader
+import ValueConverter
+import PopUp
 
 
-class MyFrame(wx.Frame):
+class Main(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX), size=(500, 300))
         self.CreateStatusBar()
@@ -18,10 +22,10 @@ class MyFrame(wx.Frame):
         # Create panels
         top_panel = wx.Panel(self)
 
-        line_count_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(400, 20), pos=(10, 10))
+        line_count_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 20), pos=(10, 10))
         self.line_count_display = wx.StaticText(line_count_panel, label="DE LINECOUNT:",
                                                 pos=(0, 0))  # TODO: Het aantal regels toevoegen
-        average_power_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(400, 20), pos=(10,10))
+        average_power_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 20), pos=(10, 40))
         self.average_power_display = wx.StaticText(average_power_panel, label="HET GEMIDDELD VERMOGEN:", pos=(0, 0))  # TODO: Het gemiddelde vermogen toevoegen
 
         # Create the menu bar
@@ -58,6 +62,11 @@ class MyFrame(wx.Frame):
         self.Close(True)
 
 
-Application = wx.App(False)
-frame = MyFrame(None, 'BLTE-Interpreter')
-Application.MainLoop()
+if __name__ == '__main__':
+    NRFbluetoothlogfileconverter
+
+
+
+    Application = wx.App(False)
+    frame = Main(None, 'BLTE-Interpreter')
+    Application.MainLoop()
