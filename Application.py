@@ -48,8 +48,10 @@ class Main(wx.Frame):
             self.file_name = prompted_dialog.GetFilename()
             self.directory_name = prompted_dialog.GetDirectory()
             file_to_open = open(os.path.join(self.directory_name, self.file_name))
+            data = NRFbluetoothlogfileconverter.Main(self.file_name)
             file_to_open.close()
         prompted_dialog.Destroy()
+        return data
 
     def on_about(self, e):
         """"Message box with OK button"""
@@ -63,10 +65,6 @@ class Main(wx.Frame):
 
 
 if __name__ == '__main__':
-    NRFbluetoothlogfileconverter
-
-
-
     Application = wx.App(False)
     frame = Main(None, 'BLTE-Interpreter')
     Application.MainLoop()
