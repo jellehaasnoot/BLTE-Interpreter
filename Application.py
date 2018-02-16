@@ -4,7 +4,6 @@ import os
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(500, 300))
-        self.control = wx.TextCtrl(self, style=wx.TE_MULTILINE)
         self.CreateStatusBar()
 
         # Create the file menu
@@ -15,6 +14,11 @@ class MyFrame(wx.Frame):
         menu_file_open = file_menu.Append(wx.ID_FILE, "&Open file...", "Open a text file with this program")
         menu_exit = file_menu.Append(wx.ID_EXIT, "E&xit", "Terminate the program")
 
+        #Create panels
+        line_count_panel = wx.Panel(self)
+        self.line_count_display = wx.StaticText(line_count_panel, label="DE LINECOUNT", pos = (20, 30)) #TODO: Het aantal regels toevoegen
+
+
         # Create the menu bar
         menu_bar = wx.MenuBar()
         menu_bar.Append(file_menu, "&File")
@@ -23,6 +27,7 @@ class MyFrame(wx.Frame):
         # Set events
         self.Bind(wx.EVT_MENU, self.OnOpen, menu_file_open)
         self.Bind(wx.EVT_MENU, self.OnAbout, menu_about)
+        self.Bind(wx.EVT_MENU, self.OnExit, menu_exit)
 
         self.Show(True)
 
@@ -47,7 +52,7 @@ class MyFrame(wx.Frame):
         self.Close(True)
 
 Application = wx.App(False)
-frame = MyFrame(None, 'Small editor')
+frame = MyFrame(None, 'BLTE-Interpreter')
 Application.MainLoop()
 
 
