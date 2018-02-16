@@ -1,9 +1,10 @@
 import wx as wx
 import os
 
+
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title=title, size=(500, 300))
+        wx.Frame.__init__(self, parent, title=title, style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX), size=(500, 300))
         self.CreateStatusBar()
 
         # Create the file menu
@@ -14,10 +15,14 @@ class MyFrame(wx.Frame):
         menu_file_open = file_menu.Append(wx.ID_FILE, "&Open file...", "Open a text file with this program")
         menu_exit = file_menu.Append(wx.ID_EXIT, "E&xit", "Terminate the program")
 
-        #Create panels
-        line_count_panel = wx.Panel(self)
-        self.line_count_display = wx.StaticText(line_count_panel, label="DE LINECOUNT", pos = (20, 30)) #TODO: Het aantal regels toevoegen
+        # Create panels
+        top_panel = wx.Panel(self)
 
+        line_count_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(400, 20), pos=(10, 10))
+        self.line_count_display = wx.StaticText(line_count_panel, label="DE LINECOUNT:",
+                                                pos=(0, 0))  # TODO: Het aantal regels toevoegen
+        average_power_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(400, 20), pos=(10,10))
+        self.average_power_display = wx.StaticText(average_power_panel, label="HET GEMIDDELD VERMOGEN:", pos=(0, 0))  # TODO: Het gemiddelde vermogen toevoegen
 
         # Create the menu bar
         menu_bar = wx.MenuBar()
@@ -25,13 +30,13 @@ class MyFrame(wx.Frame):
         self.SetMenuBar(menu_bar)
 
         # Set events
-        self.Bind(wx.EVT_MENU, self.OnOpen, menu_file_open)
-        self.Bind(wx.EVT_MENU, self.OnAbout, menu_about)
-        self.Bind(wx.EVT_MENU, self.OnExit, menu_exit)
+        self.Bind(wx.EVT_MENU, self.on_open, menu_file_open)
+        self.Bind(wx.EVT_MENU, self.on_about, menu_about)
+        self.Bind(wx.EVT_MENU, self.on_exit, menu_exit)
 
         self.Show(True)
 
-    def OnOpen(self, e):
+    def on_open(self, e):
         """"Open a file"""
         self.directory_name = ""
         prompted_dialog = wx.FileDialog(self, "Choose a log-file (*.txt)", self.directory_name, "", "*.txt", wx.FD_OPEN)
@@ -42,19 +47,17 @@ class MyFrame(wx.Frame):
             file_to_open.close()
         prompted_dialog.Destroy()
 
-    def OnAbout(self, e):
+    def on_about(self, e):
         """"Message box with OK button"""
-        prompted_dialog = wx.MessageDialog(self, "A file which converts BLTE-data into numerical data and graphs", "About BLTE-Interpreter", wx.OK)
+        prompted_dialog = wx.MessageDialog(self, "A file which converts BLTE-data into numerical data and graphs",
+                                           "About BLTE-Interpreter", wx.OK)
         prompted_dialog.ShowModal()
         prompted_dialog.Destroy()
 
-    def OnExit(self, e):
+    def on_exit(self, e):
         self.Close(True)
+
 
 Application = wx.App(False)
 frame = MyFrame(None, 'BLTE-Interpreter')
 Application.MainLoop()
-
-
-
-
