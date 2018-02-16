@@ -27,16 +27,18 @@ class MyFrame(wx.Frame):
         wx.Frame.__init__(self, parent, title=title, size=(200, 100))
         self.control = wx.TextCtrl(self, style=wx.TE_MULTILINE)
         self.CreateStatusBar()
-        
+
+        # Create the file menu
         file_menu = wx.Menu()
         
         file_menu.Append(wx.ID_ABOUT, "&About", "Information about this program")
         file_menu.AppendSeparator()
         file_menu.Append(wx.ID_EXIT, "E&xit", "Terminate the program")
-        
-        menuBar = wx.MenuBar()
-        menuBar.Append(file_menu, "&File")
-        self.SetMenuBar(menuBar)          
+
+        # Create the menu bar
+        menu_bar = wx.MenuBar()
+        menu_bar.Append(file_menu, "&File")
+        self.SetMenuBar(menu_bar)
         
         self.Show(True)
         
