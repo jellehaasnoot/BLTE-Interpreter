@@ -19,19 +19,6 @@ class Main(wx.Frame):
         menu_file_open = file_menu.Append(wx.ID_FILE, "&Open file...", "Open a text file with this program")
         menu_exit = file_menu.Append(wx.ID_EXIT, "E&xit", "Terminate the program")
 
-        # Create panels
-        top_panel = wx.Panel(self)
-
-        line_count_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 20), pos=(10, 10))
-        self.line_count_display = wx.StaticText(line_count_panel, label="DE LINECOUNT:",
-                                                pos=(0, 0))  # TODO: Het aantal regels toevoegen
-        average_power_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 20), pos=(10, 40))
-        self.average_power_display = wx.StaticText(average_power_panel, label="HET GEMIDDELD VERMOGEN:", pos=(0, 0))  # TODO: Het gemiddelde vermogen toevoegen
-
-        filtered_data_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 460), pos=(10, 70))
-        self.filtered_data_display = wx.StaticText(filtered_data_panel, label="DE DATA:" + Main.on_open.data,
-                                                   pos=(0, 0))  # TODO: De data correct toevoegen
-
         # Create the menu bar
         menu_bar = wx.MenuBar()
         menu_bar.Append(file_menu, "&File")
@@ -42,7 +29,23 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_about, menu_about)
         self.Bind(wx.EVT_MENU, self.on_exit, menu_exit)
 
+        self.top_panel = wx.Panel(self)
+
         self.Show(True)
+
+    def panel_layout(self):
+        # Create panels
+
+        line_count_panel = wx.Panel(self.top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 20), pos=(10, 10))
+        self.line_count_display = wx.StaticText(line_count_panel, label="DE LINECOUNT:",
+                                                pos=(0, 0))  # TODO: Het aantal regels toevoegen
+        average_power_panel = wx.Panel(self.top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 20), pos=(10, 40))
+        self.average_power_display = wx.StaticText(average_power_panel, label="HET GEMIDDELD VERMOGEN:",
+                                                   pos=(0, 0))  # TODO: Het gemiddelde vermogen toevoegen
+
+        filtered_data_panel = wx.Panel(self.top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 460), pos=(10, 70))
+        self.filtered_data_display = wx.StaticText(filtered_data_panel, label="DE DATA:" + str(self.data),
+                                                   pos=(0, 0))  # TODO: De data correct toevoegen
 
     def on_open(self, e):
         """"Open a file"""
@@ -52,10 +55,12 @@ class Main(wx.Frame):
             self.file_name = prompted_dialog.GetFilename()
             self.directory_name = prompted_dialog.GetDirectory()
             file_to_open = open(os.path.join(self.directory_name, self.file_name))
-            data = NRFbluetoothlogfileconverter.Main(self.file_name)
+            self.main = NRFbluetoothlogfileconverter.Main(self.file_name)
+            self.main.data_processing()
+            self.data = self.main.speed
             file_to_open.close()
         prompted_dialog.Destroy()
-        return data
+        self.panel_layout()
 
     def on_about(self, e):
         """"Message box with OK button"""
