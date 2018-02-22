@@ -8,7 +8,7 @@ import PopUp
 
 class Main(wx.Frame):
     def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title=title, style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX), size=(500, 300))
+        wx.Frame.__init__(self, parent, title=title, style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX), size=(500, 1080))
         self.CreateStatusBar()
 
         # Create the file menu
