@@ -28,6 +28,10 @@ class Main(wx.Frame):
         average_power_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 20), pos=(10, 40))
         self.average_power_display = wx.StaticText(average_power_panel, label="HET GEMIDDELD VERMOGEN:", pos=(0, 0))  # TODO: Het gemiddelde vermogen toevoegen
 
+        filtered_data_panel = wx.Panel(top_panel, -1, style=wx.SUNKEN_BORDER, size=(460, 460), pos=(10, 70))
+        self.filtered_data_display = wx.StaticText(filtered_data_panel, label="DE DATA:" + Main.on_open.data,
+                                                   pos=(0, 0))  # TODO: De data correct toevoegen
+
         # Create the menu bar
         menu_bar = wx.MenuBar()
         menu_bar.Append(file_menu, "&File")
