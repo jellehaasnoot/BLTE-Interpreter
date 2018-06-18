@@ -5,6 +5,7 @@ import LogReader
 import ValueConverter
 import PopUp
 
+# Hello
 
 class Main(wx.Frame):
     def __init__(self, parent, title):
